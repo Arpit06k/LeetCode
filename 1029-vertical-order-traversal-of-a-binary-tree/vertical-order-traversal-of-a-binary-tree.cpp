@@ -11,32 +11,32 @@
  */
 class Solution {
 public:
-    vector<vector<int>> verticalTraversal(TreeNode* root) {
-        map<int,map<int,multiset<int>>>mpp;
-        queue<pair<TreeNode*,pair<int,int>>>q;
-        q.push({root,{0,0}});
-        while(!q.empty()){
-            auto p=q.front();
-            q.pop();
-            TreeNode* node=p.first;
-                int x=p.second.first;
-                int y=p.second.second;
-                mpp[x][y].insert(node->val);
-                if(node->left){
-                    q.push({node->left,{x-1,y+1}});
-                }
-                if(node->right){
-                    q.push({node->right,{x+1,y+1}});
-                }
-}
-vector<vector<int>>ans;
-    for(auto p:mpp){
-        vector<int>level;
-        for(auto q:p.second){
-            level.insert(level.end(),q.second.begin(),q.second.end());
-        }
-        ans.push_back(level);
+     map<int, map<int, multiset<int>>> mpp;
+
+    void preorder(TreeNode* node, int x, int y) {
+        if (!node) return;
+
+        // Process current node first (preorder)
+        mpp[x][y].insert(node->val);
+
+        // Traverse left subtree
+        preorder(node->left, x - 1, y + 1);
+
+        // Traverse right subtree
+        preorder(node->right, x + 1, y + 1);
     }
-return ans;
+
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        preorder(root, 0, 0);  // root at position (0, 0)
+
+        vector<vector<int>> ans;
+        for (auto& col : mpp) {
+            vector<int> level;
+            for (auto& row : col.second) {
+                level.insert(level.end(), row.second.begin(), row.second.end());
+            }
+            ans.push_back(level);
         }
+        return ans;
+    }
 };
