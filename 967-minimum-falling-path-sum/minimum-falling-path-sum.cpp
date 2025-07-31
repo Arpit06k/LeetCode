@@ -21,35 +21,73 @@ public:
     //     }
     //     return ans;
 
-    int minFallingPathSum(vector<vector<int>>& matrix) {
+//     int minFallingPathSum(vector<vector<int>>& matrix) {
+//         int ans = 1e9;
+//         int n = matrix.size();
+//         int m = matrix[0].size();
+
+//         vector<vector<int>> dp(n, vector<int>(m));
+//         for (int j = 0; j < m; j++) {
+//             dp[0][j] = matrix[0][j];
+//         }
+
+//         for (int i = 1; i < n; i++) {
+//             for (int j = 0; j < m; j++) {
+//                 int left = matrix[i][j];
+//                 if (j - 1 >= 0)
+//                    left+= dp[i - 1][j - 1];
+//                    else left+=1e9;
+//                 int up = matrix[i][j] + dp[i - 1][j];
+
+//                 int right = matrix[i][j]; 
+//                 if (j + 1 < m)  right+=dp[i - 1][j + 1];
+//                 else right+=1e9;
+//                 int d = min(up, left);
+//                 dp[i][j] = min(d, right);
+//             }
+//         }
+//         int mini = dp[n - 1][0];
+//         for (int j = 1; j < m; j++) {
+//             mini = min(mini, dp[n - 1][j]);
+//         }
+//         return mini;
+//     }
+// };
+
+
+  int minFallingPathSum(vector<vector<int>>& matrix) {
         int ans = 1e9;
         int n = matrix.size();
         int m = matrix[0].size();
-
-        vector<vector<int>> dp(n, vector<int>(m));
-        for (int j = 0; j < m; j++) {
-            dp[0][j] = matrix[0][j];
+            vector<int>prev(m,0);
+            vector<int>curr(m,0);
+            for (int j = 0; j < m; j++) {
+            prev[j] = matrix[0][j];
         }
 
         for (int i = 1; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 int left = matrix[i][j];
                 if (j - 1 >= 0)
-                   left+= dp[i - 1][j - 1];
+                   left+= prev[j - 1];
                    else left+=1e9;
-                int up = matrix[i][j] + dp[i - 1][j];
+                int up = matrix[i][j] + prev[j];
 
                 int right = matrix[i][j]; 
-                if (j + 1 < m)  right+=dp[i - 1][j + 1];
+                if (j + 1 < m)  right+=prev[j + 1];
                 else right+=1e9;
                 int d = min(up, left);
-                dp[i][j] = min(d, right);
+                curr[j] = min(d, right);
             }
+            prev=curr;
         }
-        int mini = dp[n - 1][0];
-        for (int j = 1; j < m; j++) {
-            mini = min(mini, dp[n - 1][j]);
+        int mini = 1e9;
+        for (int j = 0; j < m; j++) {
+            mini = min(mini, prev[j]);
         }
         return mini;
     }
 };
+
+
+
