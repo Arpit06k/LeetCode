@@ -13,21 +13,44 @@ public:
 
             // return f(0, 0, triangle, dp);
 
+//     int minimumTotal(vector<vector<int>>& triangle) {
+//         int n = triangle.size();
+//         vector<vector<int>> dp(n, vector<int>(n));
+
+//         for(int j=0;j<n;j++){
+//             dp[n-1][j]=triangle[n-1][j];
+//         }
+
+//         for(int i=n-2;i>=0;i--){
+//             for(int j=i;j>=0;j--){
+//                 int left=triangle[i][j]+dp[i+1][j];
+//                 int right=triangle[i][j]+dp[i+1][j+1];
+//                 dp[i][j]=min(left,right);
+//                 }
+//         }
+//         return dp[0][0];
+//     }
+// };
+
+
+
     int minimumTotal(vector<vector<int>>& triangle) {
         int n = triangle.size();
-        vector<vector<int>> dp(n, vector<int>(n));
-
+        vector<int>base(n);
         for(int j=0;j<n;j++){
-            dp[n-1][j]=triangle[n-1][j];
+            base[j]=triangle[n-1][j];
         }
 
         for(int i=n-2;i>=0;i--){
+            vector<int>curr(n);
             for(int j=i;j>=0;j--){
-                int left=triangle[i][j]+dp[i+1][j];
-                int right=triangle[i][j]+dp[i+1][j+1];
-                dp[i][j]=min(left,right);
+                int left=triangle[i][j]+base[j];
+                int right=triangle[i][j]+base[j+1];
+                curr[j]=min(left,right);
                 }
+                        base=curr;
+
         }
-        return dp[0][0];
+        return base[0];
     }
 };
