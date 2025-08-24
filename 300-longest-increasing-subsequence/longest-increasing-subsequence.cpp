@@ -19,23 +19,65 @@
 //     }
 // };
 
+// class Solution {
+// public:
+//     int lengthOfLIS(vector<int>& nums) {
+//         int n = nums.size();
+//         vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+//         for (int prev = 0; prev <= n; prev++) {
+//             dp[n][prev] = 0;
+//         }
+//         for (int i = n - 1; i >= 0; i--) {
+//             for (int prev = 0; prev <= n; prev++) {
+//                 int len = 0 + dp[i + 1][prev];
+//                 if (prev == 0|| nums[i] > nums[prev-1]) {
+//                     len = max(len, 1 + dp[i + 1][i + 1]);
+//                 }
+//                 dp[i][prev] = len;
+//             }
+//         }
+//         return dp[0][0];
+//     }
+// };
+
+
+
+// class Solution {
+// public:
+//     int lengthOfLIS(vector<int>& nums) {
+//         int n = nums.size();
+//        vector<int>next(n + 1, 0),curr(n+1,0);
+//         for (int i = n - 1; i >= 0; i--) {
+//             for (int prev = 0; prev <= n; prev++) {
+//                 int len = 0 + next[prev];
+//                 if (prev == 0|| nums[i] > nums[prev-1]) {
+//                     len = max(len, 1 + next[i + 1]);
+//                 }
+//                 curr[prev] = len;
+//             }
+//             next=curr;
+//         }
+//         return curr[0];
+//     }
+// };
+
+
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
-        for (int prev = 0; prev <= n; prev++) {
-            dp[n][prev] = 0;
-        }
-        for (int i = n - 1; i >= 0; i--) {
-            for (int prev = 0; prev <= n; prev++) {
-                int len = 0 + dp[i + 1][prev];
-                if (prev == 0|| nums[i] > nums[prev-1]) {
-                    len = max(len, 1 + dp[i + 1][i + 1]);
+        int maxi=1;
+        vector<int>dp(n,1);
+        for(int i=0;i<n;i++){
+            for(int prev=0;prev<i;prev++){
+                if(nums[prev]<nums[i]){
+                    dp[i]=max(dp[i],1+dp[prev]);
                 }
-                dp[i][prev] = len;
             }
+            maxi=max(maxi,dp[i]);
         }
-        return dp[0][0];
+        return maxi;
     }
 };
+
+
