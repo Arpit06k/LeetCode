@@ -28,12 +28,12 @@ public:
             dp[n][prev] = 0;
         }
         for (int i = n - 1; i >= 0; i--) {
-            for (int prev = i - 1; prev >= -1; prev--) {
-                int len = 0 + dp[i + 1][prev + 1];
-                if (prev == -1 || nums[i] > nums[prev]) {
+            for (int prev = 0; prev <= n; prev++) {
+                int len = 0 + dp[i + 1][prev];
+                if (prev == 0|| nums[i] > nums[prev-1]) {
                     len = max(len, 1 + dp[i + 1][i + 1]);
                 }
-                dp[i][prev + 1] = len;
+                dp[i][prev] = len;
             }
         }
         return dp[0][0];
