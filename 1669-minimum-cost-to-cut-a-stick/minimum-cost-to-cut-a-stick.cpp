@@ -19,8 +19,8 @@ public:
         cuts.push_back(0);
         cuts.push_back(n);
         sort(cuts.begin(), cuts.end());
-        int m=cuts.size();
+        int m = cuts.size();
         vector<vector<int>> dp(m, vector<int>(m, -1));
-        return f(0,m - 1, cuts, dp);
+        return f(0, m - 1, cuts, dp);
     }
 };
