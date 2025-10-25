@@ -23,7 +23,7 @@ public:
 
                     if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==0 && dis+1<dist[nr][nc]){
                         dist[nr][nc]=1+dis;
-                        if(nr==n-1 && nc==m-1 ) return dis+1;
+                      
                         q.push({dis+1,{nr,nc}});
                     }
                 }
